@@ -1,6 +1,14 @@
+import Navbar from "./components/Navbar";
+import AppRoutes from "./routes/AppRoutes";
 
-export default function App() {
+const App = () => {
   return (
-    <div className="text-3xl text-pink-500">Homepage</div>
+    <div>
+      {/* <Navbar /> */}
+      <AppRoutes />
+    </div>
   )
 }
+
+export default App;
+

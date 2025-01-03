@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --background: #EDF5EF;
+  --primary: #000000;
+  --secondary: #00DD74;
+  font-family: var(--font-league-spartan),;
+}
+
+:root {
+  font-family: var(--font-league-spartan), sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-league-spartan), sans-serif;
+  background: var(--background);
+}
+
