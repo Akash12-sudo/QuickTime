@@ -1,7 +1,14 @@
+import LoginForm from "../../components/LoginForm";
 
 
 const OwnerLogin = () => {
-  return <div>OwnerLogin</div>;
+  return (<div className="w-full h-screen flex flex-col justify-center items-center">
+    <LoginForm 
+      foreground="text-primary" 
+      background="bg-white"
+    />
+  </div>);
 };
 
 export default OwnerLogin;
+
