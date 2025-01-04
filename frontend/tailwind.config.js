@@ -5,7 +5,17 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: "var(--background)",
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        grayish: "var(--grayish)",
+      },
+      fontFamily: {
+        spartan: ["var(--font-league-spartan)", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 }
