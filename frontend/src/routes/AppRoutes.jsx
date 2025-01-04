@@ -5,7 +5,8 @@ import UserLogin from "../pages/users/Login";
 import UserSignUp from "../pages/users/SignUp";
 import OtpVerification from "../pages/users/OtpVerification";
 import OwnerLogin from "../pages/owners/Login";
-
+import OwnerSignUp from "../pages/owners/SignUp";
+import OtpVerificationOwner from "../pages/owners/OtpVerificationOwner";
 // A wrapper component to handle Navbar logic
 const AppLayout = ({ children }) => {
   const location = useLocation();
@@ -32,6 +33,9 @@ const AppRoutes = () => {
           <Route path="/users/signup" element={<UserSignUp />} />
           <Route path="/users/otp-verify" element={<OtpVerification />} />
           <Route path="/owners/login" element={<OwnerLogin />} />
+          <Route path="/owners/signup" element={<OwnerSignUp />} />
+          <Route path="/owners/otp-verify" element={<OtpVerificationOwner />} />
+          
         </Routes>
       </AppLayout>
     </Router>

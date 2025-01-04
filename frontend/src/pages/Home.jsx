@@ -14,7 +14,7 @@ const App = () => {
           <span className="text-[#00cc66] text-[32px]">Just a Tap away</span>
         </h1>
         <div className="buttons flex gap-[40px] mt-[30px]">
-          <a href="/owner/signin" className="button owner w-[260px] h-[60px] flex justify-center items-center rounded-[30px] text-[16px] font-bold cursor-pointer bg-black text-white">
+          <a href="/owners/login" className="button owner w-[260px] h-[60px] flex justify-center items-center rounded-[30px] text-[16px] font-bold cursor-pointer bg-black text-white">
             Sign in as Owner
           </a>
           <a href="/users/login" className="button user w-[260px] h-[60px] flex justify-center items-center rounded-[30px] text-[16px] font-bold cursor-pointer bg-[#00cc66] text-white">
