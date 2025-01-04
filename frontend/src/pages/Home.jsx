@@ -8,16 +8,15 @@ const App = () => {
 
       {/* Hero Section */}
       <section className="hero-section text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <h1 className="text-[36px] font-bold text-black leading-[1.5]">
+        <div className="flex flex-col text-center text-[48px] font-mediumbold leading-[1]">
           Your Turf,
-          <br />
-          <span className="text-[#00cc66] text-[32px]">Just a Tap away</span>
-        </h1>
-        <div className="buttons flex gap-[40px] mt-[30px]">
-          <a href="/owners/login" className="button owner w-[260px] h-[60px] flex justify-center items-center rounded-[30px] text-[16px] font-bold cursor-pointer bg-black text-white">
+          <span className="text-secondary">Just a Tap away</span>
+        </div>
+        <div className="buttons flex gap-[40px] mt-[200px] gap-x-[120px]">
+          <a href="/owner/signin" className="button owner w-[260px] h-[60px] flex justify-center items-center rounded-[30px] text-[20px] font-mediumlight cursor-pointer bg-black text-secondary">
             Sign in as Owner
           </a>
-          <a href="/users/login" className="button user w-[260px] h-[60px] flex justify-center items-center rounded-[30px] text-[16px] font-bold cursor-pointer bg-[#00cc66] text-white">
+          <a href="/users/login" className="button user w-[260px] h-[60px] flex justify-center items-center rounded-[30px] text-[20px] font-mediumlight cursor-pointer bg-secondary text-black">
             Sign in as User
           </a>
         </div>
@@ -27,3 +26,5 @@ const App = () => {
 };
 
 export default App;
+
+

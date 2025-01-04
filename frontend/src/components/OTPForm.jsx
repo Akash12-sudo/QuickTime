@@ -17,7 +17,7 @@ const OTPForm = ({ background, foreground }) => {
         </p>
 
         {/* Input */}
-        <div className="mt-6 space-y-1">
+        <div className="mt-6 space-y-2">
         <input
             type="text"
             id="mobile"

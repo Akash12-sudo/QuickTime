@@ -15,6 +15,10 @@ export default {
       fontFamily: {
         spartan: ["var(--font-league-spartan)", "sans-serif"],
       },
+      fontWeight: {
+        mediumbold: "700", 
+        mediumlight: "400"
+      },
     },
   },
   plugins: [],
