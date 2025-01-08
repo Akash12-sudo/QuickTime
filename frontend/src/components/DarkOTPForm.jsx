@@ -1,13 +1,22 @@
-import React from "react";
+import React from 'react';
 import backlogo from '../../public/backlogo.png';
 
 const OTPForm = ({ background, foreground }) => {
   return (
     <div className={`flex justify-center items-center  `}>
-      <div className={`w-[375px] p-8 ${background ? background : 'bg-black'} rounded-2xl shadow-md font-light antialiased `}>
+      <div
+        className={`w-[375px] p-8 ${background ? background : 'bg-black'} rounded-2xl shadow-md font-light antialiased `}
+      >
         {/* Back Arrow */}
         <a href="/" className="text-white">
-          <img src={backlogo} alt="back" className="mb-2" width={24} height={24} style={{ filter: "invert(1)" }} />
+          <img
+            src={backlogo}
+            alt="back"
+            className="mb-2"
+            width={24}
+            height={24}
+            style={{ filter: 'invert(1)' }}
+          />
         </a>
 
         {/* Title */}

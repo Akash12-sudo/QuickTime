@@ -1,30 +1,38 @@
-import React from "react";
+import React from 'react';
 import backlogo from '../../public/backlogo.png';
 
 const OTPForm = ({ background, foreground }) => {
   return (
     <div className={`flex justify-center items-center min-h-screen `}>
-      <div className={`w-[375px] p-8 ${background ? background : 'bg-white'} rounded-2xl shadow-md font-light antialiased`}>
+      <div
+        className={`w-[375px] p-8 ${background ? background : 'bg-white'} rounded-2xl shadow-md font-light antialiased`}
+      >
         {/* Back Arrow */}
         <a href="/" className="text-grayish">
-          <img src={backlogo} alt="back" className="mb-2" width={24} height={24} />
+          <img
+            src={backlogo}
+            alt="back"
+            className="mb-2"
+            width={24}
+            height={24}
+          />
         </a>
 
         {/* Title */}
         <h2 className={`text-2xl text-${foreground}`}>Login</h2>
         <p className="text-md mt-1 text-grayish">
-            Enter the OTP sent to your mobile number
+          Enter the OTP sent to your mobile number
         </p>
 
         {/* Input */}
         <div className="mt-6 space-y-2">
-        <input
+          <input
             type="text"
             id="mobile"
             placeholder="Mobile number"
             className="w-full px-4 py-3 border-[1px] border-grayish rounded-[2px] text-grayish placeholder-grayish focus:outline-none"
           />
-        <input
+          <input
             type="password"
             id="otp"
             placeholder="OTP"

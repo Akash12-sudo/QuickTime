@@ -5,10 +5,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #EDF5EF;
+  --background: #edf5ef;
   --primary: #000000;
-  --secondary: #00DD74;
-  --grayish: #A2A2A2;
+  --secondary: #00dd74;
+  --grayish: #a2a2a2;
+  --graytext: #8F8F8F;
   --font-league-spartan: 'League Spartan', sans-serif;
 }
 
@@ -22,4 +23,3 @@ body {
   font-family: var(--font-league-spartan);
   background: var(--background);
 }
-

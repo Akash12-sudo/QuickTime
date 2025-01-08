@@ -1,5 +1,5 @@
-import React from "react";
-import backlogo from "../../public/backlogo.png";
+import React from 'react';
+import backlogo from '../../public/backlogo.png';
 
 const DarkLoginForm = () => {
   return (
@@ -7,13 +7,20 @@ const DarkLoginForm = () => {
       <div className="w-[375px]  p-8 bg-black rounded-2xl shadow-md font-light antialiased">
         {/* Back Arrow */}
         <a href="/" className="text-white">
-          <img src={backlogo} alt="back" className="mb-4" width={24} height={24} style={{ filter: "invert(1)" }} />
+          <img
+            src={backlogo}
+            alt="back"
+            className="mb-4"
+            width={24}
+            height={24}
+            style={{ filter: 'invert(1)' }}
+          />
         </a>
 
         {/* Title */}
         <h2 className="text-2xl text-white">Login</h2>
         <p className="text-sm mt-1 text-gray-400">
-          or{" "}
+          or{' '}
           <a href="/owners/signup" className="text-secondary font-medium">
             create an account
           </a>

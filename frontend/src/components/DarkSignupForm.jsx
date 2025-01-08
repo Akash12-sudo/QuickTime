@@ -1,19 +1,28 @@
-import React from "react";
+import React from 'react';
 import backlogo from '../../public/backlogo.png';
 
 const SignUpForm = ({ background, foreground }) => {
   return (
     <div className={`flex justify-center items-center  `}>
-      <div className={`w-[375px] p-6 rounded-xl shadow-lg ${background ? background : 'bg-black'} font-light antialiased`}>
+      <div
+        className={`w-[375px] p-6 rounded-xl shadow-lg ${background ? background : 'bg-black'} font-light antialiased`}
+      >
         {/* Back Arrow */}
         <a href="/" className="text-white">
-          <img src={backlogo} alt="back" className="mb-4" width={24} height={24} style={{ filter: "invert(1)" }} />
+          <img
+            src={backlogo}
+            alt="back"
+            className="mb-4"
+            width={24}
+            height={24}
+            style={{ filter: 'invert(1)' }}
+          />
         </a>
 
         {/* Title */}
         <h2 className={`text-2xl text-white`}>Sign Up</h2>
         <p className="text-sm mt-1 text-gray-400">
-          or{" "}
+          or{' '}
           <a href="/owners/login" className="text-secondary outline-none">
             login to your account
           </a>

@@ -1,13 +1,13 @@
-import Navbar from "./components/Navbar";
-import AppRoutes from "./routes/AppRoutes";
+import AppRoutes from './routes/AppRoutes';
 
 const App = () => {
   return (
-    <div>
-      <AppRoutes />
+    <div className=" flex justify-center min-h-screen">
+      <div className="w-full md:w-[1200px] flex flex-col">
+        <AppRoutes />
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default App;
-
