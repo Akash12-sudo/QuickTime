@@ -55,7 +55,7 @@ const turfDetailsArray = [
 
 const LandingPage = () => {
   return (
-    <main className="min-h-screen flex flex-col mt-4 items-center">
+    <main className="min-h-screen flex flex-col mt-4 mb-10 items-center">
       {/* Tab Navigation */}
       <TabNavigationBar />
 
