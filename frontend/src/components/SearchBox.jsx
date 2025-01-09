@@ -7,9 +7,13 @@ const SearchBox = () => {
         <p className="pt-1 truncate">Mysuru</p>
       </div>
       <img src="/search-icon.svg" className="w-[24px] h-[24px]" />
-      <input type="text" placeholder="Search your turf" className="h-full pt-1  outline-none justify-center items-center truncate"  />
+      <input
+        type="text"
+        placeholder="Search your turf"
+        className="h-full pt-1  outline-none justify-center items-center truncate"
+      />
     </div>
-  )
+  );
 };
 
 export default SearchBox;

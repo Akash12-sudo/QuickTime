@@ -1,21 +1,20 @@
-import React from 'react';
-import backlogo from '../../public/backlogo.png';
+import { Link } from 'react-router-dom';
 
 const DarkLoginForm = () => {
   return (
     <div className="flex justify-center items-center  ">
       <div className="w-[375px]  p-8 bg-black rounded-2xl shadow-md font-light antialiased">
         {/* Back Arrow */}
-        <a href="/" className="text-white">
+        <Link to="/" className="text-white">
           <img
-            src={backlogo}
+            src="/backlogo.png"
             alt="back"
             className="mb-4"
             width={24}
             height={24}
             style={{ filter: 'invert(1)' }}
           />
-        </a>
+        </Link>
 
         {/* Title */}
         <h2 className="text-2xl text-white">Login</h2>

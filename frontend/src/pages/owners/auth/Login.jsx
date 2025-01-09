@@ -1,4 +1,4 @@
-import DarkLoginForm from '../../components/DarkLoginForm';
+import DarkLoginForm from '../../../components/DarkLoginForm';
 
 const OwnerLogin = () => {
   return (

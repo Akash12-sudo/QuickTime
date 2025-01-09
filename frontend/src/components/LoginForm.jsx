@@ -1,5 +1,4 @@
-import React from 'react';
-import backlogo from '../../public/backlogo.png';
+import { Link } from 'react-router-dom';
 
 const LoginForm = ({ background, foreground }) => {
   return (
@@ -8,15 +7,15 @@ const LoginForm = ({ background, foreground }) => {
         className={`w-[375px] p-8 ${background ? background : 'bg-white'} rounded-2xl shadow-md font-light antialiased`}
       >
         {/* Back Arrow */}
-        <a href="/" className="text-grayish">
+        <Link to="/" className="text-gray-700">
           <img
-            src={backlogo}
+            src="/backlogo.png"
             alt="back"
             className="mb-4"
             width={24}
             height={24}
           />
-        </a>
+        </Link>
 
         {/* Title */}
         <h2 className={`text-2xl text-${foreground}`}>Login</h2>

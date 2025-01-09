@@ -1,4 +1,4 @@
-import OTPForm from '../../components/DarkOTPForm';
+import OTPForm from '../../../components/DarkOTPForm';
 
 const OtpVerificationOwner = () => {
   return (

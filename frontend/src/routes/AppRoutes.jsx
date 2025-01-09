@@ -6,12 +6,12 @@ import {
 } from 'react-router-dom';
 import Home from '../pages/Home';
 import Navbar from '../components/Navbar';
-import UserLogin from '../pages/users/Login';
-import UserSignUp from '../pages/users/SignUp';
-import OtpVerification from '../pages/users/OtpVerification';
-import OwnerLogin from '../pages/owners/Login';
-import OwnerSignUp from '../pages/owners/SignUp';
-import OtpVerificationOwner from '../pages/owners/OtpVerificationOwner';
+import UserLogin from '../pages/users/auth/Login';
+import UserSignUp from '../pages/users/auth/SignUp';
+import OtpVerification from '../pages/users/auth/OtpVerification';
+import OwnerLogin from '../pages/owners/auth/Login';
+import OwnerSignUp from '../pages/owners/auth/SignUp';
+import OtpVerificationOwner from '../pages/owners/auth/OtpVerificationOwner';
 import LandingPage from '../pages/users/LandingPage';
 
 // A wrapper component to handle Navbar logic
