@@ -7,9 +7,10 @@ export default {
         background: 'var(--background)',
         primary: 'var(--primary)',
         secondary: 'var(--secondary)',
+        secondarylight: 'var(--secondarylight)',
         grayish: 'var(--grayish)',
         graytext: 'var(--graytext)',
-        imagebackground: '#D9D9D9',
+        imagebackground: 'var(--imagebackground)',
       },
       fontFamily: {
         spartan: ['var(--font-league-spartan)', 'sans-serif'],

@@ -1,57 +1,7 @@
 import TabNavigationBar from '../../components/TabNavigationBar';
 import TurfCard from '../../components/TurfCard';
-
+import { turfDetailsArray } from '../../../constants';
 // For testing purpose
-const turfDetailsArray = [
-  {
-    turfName: 'Sunrise Arena',
-    sportType: 'Football | Cricket',
-    address: 'Vijaynagar, Mysuru',
-    rating: '4.3',
-    rate: '1200',
-    distance: '1.8',
-  },
-  {
-    turfName: 'Sunrise Arena',
-    sportType: 'Football | Cricket',
-    address: 'Vijaynagar, Mysuru',
-    rating: '4.3',
-    rate: '1200',
-    distance: '1.8',
-  },
-  {
-    turfName: 'Sunrise Arena',
-    sportType: 'Football | Cricket',
-    address: 'Vijaynagar, Mysuru',
-    rating: '4.3',
-    rate: '1200',
-    distance: '1.8',
-  },
-  {
-    turfName: 'Sunrise Arena',
-    sportType: 'Football | Cricket',
-    address: 'Vijaynagar, Mysuru',
-    rating: '3.4',
-    rate: '1200',
-    distance: '1.8',
-  },
-  {
-    turfName: 'Sunrise Arena',
-    sportType: 'Football | Cricket',
-    address: 'Vijaynagar, Mysuru',
-    rating: '1.8',
-    rate: '1200',
-    distance: '1.8',
-  },
-  {
-    turfName: 'Sunrise Arena',
-    sportType: 'Football | Cricket',
-    address: 'Vijaynagar, Mysuru',
-    rating: '4.3',
-    rate: '1200',
-    distance: '1.8',
-  },
-];
 
 const LandingPage = () => {
   return (

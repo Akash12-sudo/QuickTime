@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 import React from "react";
+=======
+import React from 'react';
+>>>>>>> 066d7ddd43ea00badb117fa9624f8eea7cce065e
 
 function QuickTimeUI() {
   return (
