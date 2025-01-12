@@ -10,6 +10,7 @@ export default {
         secondarylight: 'var(--secondarylight)',
         grayish: 'var(--grayish)',
         graytext: 'var(--graytext)',
+        lightgray: "var(--lightgray)",
         imagebackground: 'var(--imagebackground)',
       },
       fontFamily: {

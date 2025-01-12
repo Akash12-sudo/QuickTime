@@ -4,7 +4,7 @@ const Slot = ({ slot, status, onSelect, isSelected }) => {
 
   return (
     <div
-      className={`w-[150px] h-[50px]  flex items-center justify-center text-center  rounded-[5px] ${isSelected ? 'bg-secondarylight' : 'bg-transparent'} ${status === 'Booked' ? 'border-imagebackground bg-[#d9d9d9] text-white' : 'border-[2px] border-secondarylight'} `}
+      className={`w-[150px] h-[50px] flex items-center justify-center text-center  rounded-[5px] ${isSelected ? 'bg-secondarylight' : 'bg-transparent'} ${status === 'Booked' ? 'text-white bg-gray-500/30' : 'border-[2px] border-secondarylight'}`}
       onClick={status === 'Booked' ? '' : onSelect}
     >
       <p className="antialiased font-mediumlight text-[2xl]">{slot}</p>

@@ -14,6 +14,7 @@ import OwnerSignUp from '../pages/owners/auth/SignUp';
 import OtpVerificationOwner from '../pages/owners/auth/OtpVerificationOwner';
 import LandingPage from '../pages/users/LandingPage';
 import BookSlot from '../pages/users/BookSlot';
+import QuickTimeUI from '../pages/owners/Landing';
 
 // Helper function to simplify dynamic navbar rendering
 const getNavbarType = (path) => {
@@ -22,8 +23,10 @@ const getNavbarType = (path) => {
       return 'home';
     case '/users/landing':
       return 'user-landing';
-    case '/users/bookslot/:id':
+    case '/users/bookslot':
       return 'user-bookslot';
+    case '/owners/landing':
+      return 'owner-landing';
     default:
       return 'default';
   }
@@ -56,7 +59,8 @@ const AppRoutes = () => {
           <Route path="/owners/signup" element={<OwnerSignUp />} />
           <Route path="/owners/otp-verify" element={<OtpVerificationOwner />} />
           <Route path="/users/landing" element={<LandingPage />} />
-          <Route path="/users/bookslot/:id" element={<BookSlot />} />
+          <Route path="/users/bookslot" element={<BookSlot />} />
+          <Route path="/owners/landing" element={<QuickTimeUI />} />
         </Routes>
       </AppLayout>
     </Router>

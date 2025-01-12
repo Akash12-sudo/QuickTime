@@ -27,7 +27,7 @@ const Navbar = ({ type }) => {
           )}
 
           {/* Get the App button with border and padding */}
-          {type === 'user-landing' || type === 'user-bookslot' ? (
+          {type === 'user-landing' || type === 'user-bookslot' || type === 'owner-landing' ? (
             <p className="font-light text-2xl">{username}</p>
           ) : (
             <button className="border-[1.2px] border-black rounded-[12px] px-6 py-2 text-black">

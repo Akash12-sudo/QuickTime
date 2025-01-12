@@ -1,14 +1,12 @@
-<<<<<<< HEAD
+
 
 import React from "react";
-=======
-import React from 'react';
->>>>>>> 066d7ddd43ea00badb117fa9624f8eea7cce065e
+// >>>>>>> 066d7ddd43ea00badb117fa9624f8eea7cce065e
 
 function QuickTimeUI() {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-[90%] max-w-[1200px] bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="flex w-full justify-center items-center min-h-screen">
+      <div className="w-[90%] max-w-[1200px] rounded-lg overflow-hidden">
         {/* Header Section */}
         <header className="flex justify-between items-center p-5 bg-teal-50 border-b border-gray-300">
           <div className="text-2xl font-bold text-teal-500">
@@ -71,7 +69,7 @@ function QuickTimeUI() {
           </div>
 
           {/* Right Section */}
-          <div className="flex-1 pl-5">
+          <div className="flex-1 bg-white rounded-xl p-4 ">
             <div>
               <h3 className="text-xl font-bold mb-2">Your Turf Details</h3>
               <p className="text-sm text-gray-600 mb-4">Enter all the necessary details</p>
