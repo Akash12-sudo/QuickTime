@@ -29,13 +29,13 @@ function QuickTimeUI() {
           <div className="text-gray-600 text-sm">Owner</div>
         </header> */}
 
-        <div className="flex mt-[200px] ">
+        <div className="flex mt-[120px] py-8 border-t-[1px] border-imagebackground ">
           {/* Left Section */}
           <div className="flex-2 pr-5 ">
             {/* Owner's Name Section */}
-            <div className="mb-5 flex flex-row justify-start items-center gap-x-4">
-              <h2 className="text-xl font-mediumlight mb-2">Owner&apos;s Name</h2>
-              <label className="relative w-[76px] h-[38px] flex items-center justify-center">
+            <div className="mb-10 flex flex-row justify-start items-center gap-x-4 ">
+              <h2 className="text-[40px] font-mediumlight mt-10">Owner&apos;s Name</h2>
+              <label className="relative w-1/4 h-full flex items-center justify-center">
                 {/* Hidden Checkbox */}
                 <input
                   type="checkbox"
@@ -45,12 +45,12 @@ function QuickTimeUI() {
                 />
                 {/* Background (Track) */}
                 <span
-                  className={`absolute top-0 left-0 h-6 w-12 rounded-full  transition-all duration-300 bg-white`}
+                  className={`absolute top-0 left-0 z-1 h-[38px] w-[76px] rounded-full border-[1px] border-secondarylight transition-all duration-300 bg-white`}
                 ></span>
                 {/* Toggle Ball */}
                 <span
-                  className={`absolute top-[3px] left-[3px] h-5 w-5 rounded-full  transition-all duration-300 ${
-                    isToggled ? "translate-x-6 bg-secondarylight" : "translate-x-0 bg-imagebackground"
+                  className={`absolute top-1 left-1 z-1 h-[30px] w-[30px] rounded-full  transition-all duration-300 ${
+                    isToggled ? "translate-x-[38px] bg-secondarylight" : "translate-x-0 bg-imagebackground"
                   }`}
                 ></span>
               </label>

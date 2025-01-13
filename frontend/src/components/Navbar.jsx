@@ -5,7 +5,7 @@ import SearchBox from '../components/SearchBox';
 const Navbar = ({ type }) => {
 
   return (
-    <div className="w-full left-0 bg-background fixed flex flex-row items-center justify-center">
+    <div className="w-full left-0 bg-background fixed z-50 flex flex-row items-center justify-center">
       <nav className="w-[1200px] mb-2 top-1 pt-12 pb-4  flex justify-between items-center  font-mediumlight">
         {/* QuickTime Logo */}
         <Link to={{ pathname: '/' }} className="bg-red-20">
