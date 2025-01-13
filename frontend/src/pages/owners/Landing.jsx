@@ -1,70 +1,88 @@
-
-
-import React from "react";
-// >>>>>>> 066d7ddd43ea00badb117fa9624f8eea7cce065e
+import { useState } from 'react';
+import { ownerSlots } from '../../../constants';
+import Slot from '../../components/Slot';
 
 function QuickTimeUI() {
+
+  const slots = ownerSlots.slots;
+  // State to get the current selected sort
+  const [selectedSlot, setSelectedSlot] = useState(null);
+
+  // handle slot selection
+  const handleSlotSelect = (slot) => {
+    setSelectedSlot((prev) => (prev === slot ? null : slot));
+  };
+
   return (
     <div className="flex w-full justify-center items-center min-h-screen">
-      <div className="w-[90%] max-w-[1200px] rounded-lg overflow-hidden">
+      <div className="w-full rounded-lg overflow-hidden">
         {/* Header Section */}
-        <header className="flex justify-between items-center p-5 bg-teal-50 border-b border-gray-300">
+        {/* <header className="flex justify-between items-center p-5 bg-teal-50 border-b border-gray-300">
           <div className="text-2xl font-bold text-teal-500">
             Quick<span className="text-gray-700">Time.</span>
           </div>
           <div className="text-gray-600 text-sm">Owner</div>
-        </header>
+        </header> */}
 
-        <div className="flex p-5">
+        <div className="flex mt-[200px] ">
           {/* Left Section */}
           <div className="flex-2 pr-5 border-r border-gray-300">
             {/* Owner's Name Section */}
-            <div className="mb-5">
-              <h2 className="text-xl font-bold mb-2">Owner's Name</h2>
-              <div className="w-14 h-7 bg-teal-500 rounded-full"></div>
+            <div className="mb-5 flex flex-row justify-start gap-x-4">
+              <h2 className="text-xl font-mediumlight mb-2">Owner&apos;s Name</h2>
+              <div className="w-14 h-7 bg-secondarylight rounded-full"></div>
             </div>
 
             {/* Sales Section */}
-            <div className="bg-gray-200 h-36 flex justify-center items-center rounded-lg mb-5">
+            <div className="bg-gray-200 w-[660px] h-[300px] flex justify-center items-center rounded-lg mb-5">
               <p className="text-gray-600">Sales this Month</p>
             </div>
 
             {/* Booking Slots Section */}
             <div>
-              <h3 className="text-lg font-bold mb-3">Book Slots for yourself</h3>
-              <div className="flex gap-2 mb-4">
-                <button className="px-4 py-2 border border-teal-500 text-white bg-teal-500 rounded">12/1</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 bg-white rounded">13/1</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 bg-white rounded">14/1</button>
+            <div className="flex justify-start items-center gap-x-8">
+            <p className="font-mediumlight text-[32px] antialiased">
+              Book Slots for yourself
+            </p>
+            <div className="flex w-[300px] h-[50px] justify-between rounded-lg font-mediumlight text-[20px] antialiased bg-secondarylight mb-2">
+              <p className="w-full h-full flex items-center justify-center text-center">
+                12-1
+              </p>
+              <p className="w-full h-full flex items-center justify-center text-center bg-white">
+                13-1
+              </p>
+              <p className="w-full h-full flex items-center justify-center text-center bg-white rounded-r-lg">
+                14-1
+              </p>
+            </div>
+          </div>
+              <div className="w-full grid sm:grid-cols-4 gap-y-12 gap-x-12 my-8">
+          {slots &&
+            Object.entries(slots).map(([slotKey, status]) => (
+              <Slot
+                key={`${slotKey}+${status}`}
+                slot={slotKey}
+                status={status}
+                onSelect={() => handleSlotSelect(slotKey)}
+                isSelected={selectedSlot === slotKey}
+              />
+            ))}
+        </div>
+        <div className='mt-20 flex flex-row justify-between items-center'>
+        <button className="w-[200px] h-[50px] px-4 py-2 bg-secondarylight rounded">Book for you</button>
+        <div className="w-1/2 flex items-center justify-end gap-x-16">
+            {['Available', 'Selected', 'Booked'].map((item, id) => (
+              <div key={id} className="flex gap-x-4 items-center">
+                <div
+                  className={`w-[32px] h-[32px] rounded-[2px] border-[2px] ${item === 'Booked' ? 'border-imagebackground bg-imagebackground' : 'border-secondarylight'} ${item === 'Selected' && 'bg-secondarylight'} `}
+                ></div>
+                <p className="mt-1 font-extralight text-[20px] antialiased">
+                  {item}
+                </p>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">6am-7am</button>
-                <button className="px-4 py-2 border bg-gray-300 text-gray-500 rounded cursor-not-allowed">
-                  7am-8am
-                </button>
-                <button className="px-4 py-2 border bg-teal-500 text-white rounded">8am-9am</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">11am-12pm</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">12pm-1pm</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">1pm-2pm</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">2pm-3pm</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">3pm-4pm</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">6pm-7pm</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">7pm-8pm</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">8pm-9pm</button>
-                <button className="px-4 py-2 border border-teal-500 text-teal-500 rounded">9pm-10pm</button>
-              </div>
-              <button className="px-4 py-2 mt-4 bg-teal-500 text-white rounded w-full">Book for you</button>
-              <div className="flex gap-4 mt-4">
-                <span className="flex items-center gap-2">
-                  <div className="w-5 h-5 bg-white border border-teal-500 rounded"></div> Available
-                </span>
-                <span className="flex items-center gap-2">
-                  <div className="w-5 h-5 bg-teal-500 rounded"></div> Selected
-                </span>
-                <span className="flex items-center gap-2">
-                  <div className="w-5 h-5 bg-gray-300 rounded"></div> Booked
-                </span>
-              </div>
+            ))}
+          </div>
+        </div>
             </div>
           </div>
 
