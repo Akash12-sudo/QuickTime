@@ -3,7 +3,6 @@ import SearchBox from '../components/SearchBox';
 
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ type }) => {
-  const username = 'User';
 
   return (
     <div className="w-full left-0 bg-background fixed flex flex-row items-center justify-center">
@@ -28,7 +27,7 @@ const Navbar = ({ type }) => {
 
           {/* Get the App button with border and padding */}
           {type === 'user-landing' || type === 'user-bookslot' || type === 'owner-landing' ? (
-            <p className="font-light text-2xl">{username}</p>
+            <p className="font-light text-2xl">{ type === 'owner-landing' ? 'Owner' : "User"}</p>
           ) : (
             <button className="border-[1.2px] border-black rounded-[12px] px-6 py-2 text-black">
               Get the App

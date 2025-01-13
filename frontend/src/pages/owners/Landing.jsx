@@ -7,6 +7,11 @@ function QuickTimeUI() {
   const slots = ownerSlots.slots;
   // State to get the current selected sort
   const [selectedSlot, setSelectedSlot] = useState(null);
+  const [isToggled, setIsToggled] = useState(false);
+
+  const handleToggle = () => {
+    setIsToggled((prevState) => !prevState);
+  };
 
   // handle slot selection
   const handleSlotSelect = (slot) => {
@@ -26,11 +31,29 @@ function QuickTimeUI() {
 
         <div className="flex mt-[200px] ">
           {/* Left Section */}
-          <div className="flex-2 pr-5 border-r border-gray-300">
+          <div className="flex-2 pr-5 ">
             {/* Owner's Name Section */}
-            <div className="mb-5 flex flex-row justify-start gap-x-4">
+            <div className="mb-5 flex flex-row justify-start items-center gap-x-4">
               <h2 className="text-xl font-mediumlight mb-2">Owner&apos;s Name</h2>
-              <div className="w-14 h-7 bg-secondarylight rounded-full"></div>
+              <label className="relative w-[76px] h-[38px] flex items-center justify-center">
+                {/* Hidden Checkbox */}
+                <input
+                  type="checkbox"
+                  className="peer hidden"
+                  checked={isToggled}
+                  onChange={handleToggle}
+                />
+                {/* Background (Track) */}
+                <span
+                  className={`absolute top-0 left-0 h-6 w-12 rounded-full  transition-all duration-300 bg-white`}
+                ></span>
+                {/* Toggle Ball */}
+                <span
+                  className={`absolute top-[3px] left-[3px] h-5 w-5 rounded-full  transition-all duration-300 ${
+                    isToggled ? "translate-x-6 bg-secondarylight" : "translate-x-0 bg-imagebackground"
+                  }`}
+                ></span>
+              </label>
             </div>
 
             {/* Sales Section */}
