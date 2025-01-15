@@ -10,13 +10,14 @@ export default {
         secondarylight: 'var(--secondarylight)',
         grayish: 'var(--grayish)',
         graytext: 'var(--graytext)',
-        lightgray: "var(--lightgray)",
+        lightgray: 'var(--lightgray)',
         imagebackground: 'var(--imagebackground)',
       },
       fontFamily: {
         spartan: ['var(--font-league-spartan)', 'sans-serif'],
       },
       fontWeight: {
+        extralight: '100',
         mediumbold: '700',
         mediumlight: '400',
       },

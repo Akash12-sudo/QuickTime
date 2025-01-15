@@ -157,7 +157,6 @@ export const turfDetailsArray = [
   },
 ];
 
-
 export const ownerSlots = {
   slots: {
     '6am-7am': 'Available',
@@ -172,5 +171,5 @@ export const ownerSlots = {
     '7pm-8pm': 'Available',
     '8pm-9pm': 'Available',
     '9pm-10pm': 'Available',
-  },  
-}
+  },
+};
