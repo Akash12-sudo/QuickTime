@@ -14,12 +14,14 @@ const App = () => {
         <div className="buttons flex gap-[40px] mt-[150px] gap-x-[120px]">
           <Link
             to="/owners/login"
+            replace
             className="button owner w-[260px] h-[60px] flex justify-center items-center rounded-[30px] text-[20px] font-mediumlight cursor-pointer bg-black text-secondary"
           >
             Sign in as Owner
           </Link>
           <Link
             to="/users/login"
+            replace
             className="button user w-[260px] h-[60px] flex justify-center items-center rounded-[30px] text-[20px] font-mediumlight cursor-pointer bg-secondary text-black"
           >
             Sign in as User

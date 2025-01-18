@@ -29,7 +29,6 @@ function QuickTimeUI() {
         </header> */}
 
         <div className="flex mt-[100px]  py-8 ">
-
           {/* Left Section */}
           <div className="flex-2 pr-5 ">
             {/* Owner's Name Section */}
@@ -62,7 +61,9 @@ function QuickTimeUI() {
 
             {/* Sales Section */}
             <div className="bg-imagebackground w-[660px] h-[300px] flex justify-center items-center rounded-lg mb-20">
-              <p className="text-graytext font-mediumlight text-[40px] antialiased">Sales this Month</p>
+              <p className="text-graytext font-mediumlight text-[40px] antialiased">
+                Sales this Month
+              </p>
             </div>
 
             {/* Booking Slots Section */}
@@ -105,9 +106,7 @@ function QuickTimeUI() {
                       <div
                         className={`w-[32px] h-[32px] rounded-[2px] border-[2px] ${item === 'Booked' ? 'border-imagebackground bg-imagebackground' : 'border-secondarylight'} ${item === 'Selected' && 'bg-secondarylight'} `}
                       ></div>
-                      <p className="mt-1 text-[20px] font-extralight">
-                        {item}
-                      </p>
+                      <p className="mt-1 text-[20px] font-extralight">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -117,8 +116,12 @@ function QuickTimeUI() {
 
           {/* Right Section */}
           <div className="flex w-full justify-end ">
-            <div className={`flex flex-col w-[405px] rounded-xl px-6 py-4 text-grayish ${isToggled ? 'bg-white' : 'bg-[#D9D9D999]/60'} `}>
-              <h3 className="text-[18px] text-black font-medium mb-2">Your Turf Details</h3>
+            <div
+              className={`flex flex-col w-[405px] rounded-xl px-6 py-4 text-grayish ${isToggled ? 'bg-white' : 'bg-[#D9D9D999]/60'} `}
+            >
+              <h3 className="text-[18px] text-black font-medium mb-2">
+                Your Turf Details
+              </h3>
               <p className="text-[14px] text-grayish mb-4">
                 Enter all the necessary details
               </p>
@@ -130,9 +133,8 @@ function QuickTimeUI() {
                   Add Photo
                 </div>
               </div>
-              <form className='w-full text-[14px] font-light antialiased space-y-6'>
-
-                <div className='flex w-full justify-center items-center'>
+              <form className="w-full text-[14px] font-light antialiased space-y-6">
+                <div className="flex w-full justify-center items-center">
                   <label className="w-1/3 pl-2">Owner Name</label>
                   <input
                     type="text"
@@ -140,7 +142,7 @@ function QuickTimeUI() {
                   />
                 </div>
 
-                <div className='flex w-full justify-between items-center'>
+                <div className="flex w-full justify-between items-center">
                   <label className="w-1/3 pl-2">Phone</label>
                   <input
                     type="text"
@@ -148,31 +150,27 @@ function QuickTimeUI() {
                   />
                 </div>
 
-                <div className='flex w-full justify-between items-center'>
-                <label className="w-1/3 pl-2">Name</label>
-                <input
-                  type="text"
-                  className="w-full max-w-[260px] p-2 border border-grayish rounded bg-inherit"
-                />
-                </div>
-
-                <div className='flex w-full justify-between items-center'>
-                <label className="w-1/3 pl-2">Type</label>
-                <select                   
-                className="w-full max-w-[260px] p-2 border border-grayish rounded bg-inherit"
-                >
-                  <option>Select the type of Sport</option>
-                </select>
-                </div>
-
-                <div className='flex w-full justify-between items-center'>
-                  <label className="w-1/3 pl-2">Address</label>
-                  <textarea
+                <div className="flex w-full justify-between items-center">
+                  <label className="w-1/3 pl-2">Name</label>
+                  <input
+                    type="text"
                     className="w-full max-w-[260px] p-2 border border-grayish rounded bg-inherit"
-                />
+                  />
                 </div>
 
-                <div className='flex w-full justify-between items-center'>
+                <div className="flex w-full justify-between items-center">
+                  <label className="w-1/3 pl-2">Type</label>
+                  <select className="w-full max-w-[260px] p-2 border border-grayish rounded bg-inherit">
+                    <option>Select the type of Sport</option>
+                  </select>
+                </div>
+
+                <div className="flex w-full justify-between items-center">
+                  <label className="w-1/3 pl-2">Address</label>
+                  <textarea className="w-full max-w-[260px] p-2 border border-grayish rounded bg-inherit" />
+                </div>
+
+                <div className="flex w-full justify-between items-center">
                   <label className="w-1/3 pl-2">Google Maps</label>
                   <input
                     type="text"
@@ -181,37 +179,36 @@ function QuickTimeUI() {
                   />
                 </div>
 
-                <div className='flex w-full justify-between items-center'>
-                <label className="w-1/3 pl-2">Timings</label>
-                <div
-                  className="w-full max-w-[260px] rounded flex justify-between gap-x-2">
-                  <input
-                    type="text"
-                    className="w-[120px] border p-2 border-grayish rounded bg-inherit"
-                    placeholder="From"
-                  />
-                  <input
-                    type="text"
-                    className="w-[120px] p-2 border border-grayish rounded bg-inherit"
-                    placeholder="To"
-                  />
-                </div>
+                <div className="flex w-full justify-between items-center">
+                  <label className="w-1/3 pl-2">Timings</label>
+                  <div className="w-full max-w-[260px] rounded flex justify-between gap-x-2">
+                    <input
+                      type="text"
+                      className="w-[120px] border p-2 border-grayish rounded bg-inherit"
+                      placeholder="From"
+                    />
+                    <input
+                      type="text"
+                      className="w-[120px] p-2 border border-grayish rounded bg-inherit"
+                      placeholder="To"
+                    />
+                  </div>
                 </div>
 
-                <div className='flex w-full justify-between items-center'>
+                <div className="flex w-full justify-between items-center">
                   <label className="w-1/3 pl-2">Price</label>
                   <input
                     type="text"
                     className="w-full max-w-[260px] p-2 border border-grayish rounded bg-inherit"
                   />
                 </div>
-                
+
                 <button
-                    type="submit"
-                    className="w-full p-3 bg-secondarylight text-white rounded"
-                  >
-                    SAVE
-                  </button>
+                  type="submit"
+                  className="w-full p-3 bg-secondarylight text-white rounded"
+                >
+                  SAVE
+                </button>
               </form>
             </div>
           </div>
