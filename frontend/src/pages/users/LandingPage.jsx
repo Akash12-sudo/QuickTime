@@ -1,9 +1,10 @@
 import TabNavigationBar from '../../components/TabNavigationBar';
 import TurfCard from '../../components/TurfCard';
 import { turfDetailsArray } from '../../../constants';
-// For testing purpose
 
 const LandingPage = () => {
+
+
   return (
     <main className="min-h-screen flex flex-col mt-4 mb-10 items-center">
       {/* Tab Navigation */}

@@ -1,12 +1,12 @@
 const express = require('express');
 const User = require('../model/user.model');
-const twilio = require('twilio');
+// const twilio = require('twilio');
 const router = express.Router();
 
 // Twilio configuration
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = twilio(accountSid, authToken);
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const client = twilio(accountSid, authToken);
 
 // Create a new user
 router.post('/create', async (req, res) => {
@@ -38,7 +38,6 @@ router.post('/create', async (req, res) => {
         res.status(500).json({ message: "Failed to create user", error: error.message });
     }
 });
-
 
 // User Login Route
 router.post('/login', async (req, res) => {
@@ -86,11 +85,12 @@ router.post("/send-otp", async (req, res) => {
         // Find existing user or create a new one
         let user = await User.findOne({ mobile });
         if (!user) {
-            user = new User({
-                mobile,
-                otp,
-                otpExpiration,
-            });
+            // user = new User({
+            //     mobile,
+            //     otp,
+            //     otpExpiration,
+            // });
+            return res.status(401).json({ error: "No user found!"}) // If no user exist with phone number, return unauthorized status
         } else {
             // Update OTP and expiration for existing user
             user.otp = otp;
