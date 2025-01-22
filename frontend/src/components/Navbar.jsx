@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import SearchBox from '../components/SearchBox';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
 const dynamicNavClassName = (type) => {
   // defining possible routes
@@ -10,6 +12,10 @@ const dynamicNavClassName = (type) => {
 
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ type }) => {
+
+  const { user } = useContext(UserContext)
+  console.log(user)
+
   return (
     <div className="w-full left-0 bg-background fixed z-50 flex flex-row items-center justify-center">
       <nav
@@ -38,7 +44,7 @@ const Navbar = ({ type }) => {
           type === 'user-bookslot' ||
           type === 'owner-landing' ? (
             <p className="font-light text-2xl">
-              {type === 'owner-landing' ? 'Owner' : 'User'}
+              {type === 'owner-landing' ? 'Owner' : `${user.name ? user.name : 'User'}`}
             </p>
           ) : (
             <button className="border-[1.2px] border-black rounded-[12px] px-6 py-2 text-black">

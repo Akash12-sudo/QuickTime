@@ -1,21 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 
 // eslint-disable-next-line react/prop-types
 const AuthForm = ({ type, route, role }) => {
+
+  const apiUrl = import.meta.env.VITE_API_URL;
   const { user = {}, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // Updating the user's role
-  useEffect(() => {
-    const updateUser = () => {
-      setUser((prevUser) => ({ ...prevUser, role }));
-      console.log(user);
-    };
-    return updateUser();
-  }, []);
 
   const handleRoutes = () => {
     if (role === 'user')
@@ -23,20 +17,71 @@ const AuthForm = ({ type, route, role }) => {
     else return type === 'login' ? '/owners/signup' : '/owners/login';
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // setUser((prev) => ({ ...prev, "role": role}))
     console.log(user);
 
     if (type === 'login') {
       // navigate(route);
-      console.log('logged in');
-      navigate(route);
+      // console.log('logged in');
+      // navigate(route);
+      const { mobile } = user;
+      if (role === 'user') {
+        try {
+          const response = await fetch(apiUrl + "/api/user/send-otp", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ mobile })
+            
+          })
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            alert(`${result.error}`); // Show an alert first
+            throw new Error(`Error: ${response.statusText}`); // Then throw the error
+          }
+
+          console.log("otp generated successfully: ", result)
+          // setUser((prevUser) => ({...prevUser, 'otp': result.otp}))
+          navigate(route);
+
+        } catch (error) {
+          console.error('Error while generating otp:', error);         
+        }
+      }
+
     } else {
       // Handle signup-specific logic if needed
-      console.log('signed up');
+      const { name, email, mobile } = user;
+      if (role === 'user') {
+
+          try {
+            const response = await fetch(apiUrl + "/api/user/create", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json', // Specifies the format of the data
+              },
+              body: JSON.stringify({ name, email, mobile }), // Converts the JavaScript object to a JSON string
+            });
+        
+            if (!response.ok) {
+              throw new Error(`Error: ${response.status}`);
+            }
+            const result = await response.json();
+            console.log('Success:', result);
+           alert('User has been successfully created!');
+           window.location.reload();
+          } catch (error) {
+            console.error('Error while signUp:', error);
+          }
+        };
+      }
     }
-  };
+  
 
   return (
     <div className="flex justify-center items-center h-auto">

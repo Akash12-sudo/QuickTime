@@ -1,16 +1,47 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
 
 // eslint-disable-next-line react/prop-types
 const OTPForm = ({ role }) => {
   // getting the user
-  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const { user, setUser } = useContext(UserContext);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(user)
-  }
+
+    const { mobile, otp } = user;
+    console.log(mobile, otp);
+
+    if(role === 'user') {
+      try {
+        const response = await fetch(apiUrl + "/api/user/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ mobile, otp })
+          
+        })
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          alert(`${result.message}`); // Show an alert first
+          throw new Error(`Error: ${response.statusText}`); // Then throw the error
+        }
+
+        console.log("otp generated successfully: ", result)
+        // setUser((prevUser) => ({...prevUser, 'otp': result.otp}))
+        navigate('/users/landing');
+
+      } catch (error) {
+        console.error('error while login', error)
+      }
+    } 
+  };
 
   return (
     <div className={`flex justify-center items-center h-auto `}>
@@ -57,6 +88,8 @@ const OTPForm = ({ role }) => {
             <input
               type="password"
               id="otp"
+              value={user.otp}
+              onChange={(e) => setUser((prevUser) => ({...prevUser, [e.target.id]: e.target.value}))}
               placeholder="OTP"
               className="w-full px-4 py-3 bg-inherit border-[1px] border-grayish rounded-[2px] text-grayish placeholder-grayish focus:outline-none"
             />

@@ -9,6 +9,7 @@ export const UserContextProvider = ({ children }) => {
     role: '',
     email: '',
     mobile: '',
+    otp: ''
   });
 
   return (
