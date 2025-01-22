@@ -46,6 +46,7 @@ const AuthForm = ({ type, route, role }) => {
           }
 
           console.log("otp generated successfully: ", result)
+          alert('An OTP send to your phone number');
           // setUser((prevUser) => ({...prevUser, 'otp': result.otp}))
           navigate(route);
 
@@ -57,6 +58,8 @@ const AuthForm = ({ type, route, role }) => {
     } else {
       // Handle signup-specific logic if needed
       const { name, email, mobile } = user;
+      console.log(user);
+
       if (role === 'user') {
 
           try {
@@ -67,14 +70,16 @@ const AuthForm = ({ type, route, role }) => {
               },
               body: JSON.stringify({ name, email, mobile }), // Converts the JavaScript object to a JSON string
             });
-        
+
+            const result = await response.json();
             if (!response.ok) {
+              // console.log(response);
+              alert(`${result.error}`); // Show an alert first
               throw new Error(`Error: ${response.status}`);
             }
-            const result = await response.json();
             console.log('Success:', result);
-           alert('User has been successfully created!');
-           window.location.reload();
+            alert('User has been successfully created!');
+            window.location.reload();
           } catch (error) {
             console.error('Error while signUp:', error);
           }

@@ -8,6 +8,7 @@ const router = express.Router();
 router.post("/create", async (req, res) => {
     try {
         const { name, email, mobile } = req.body;
+        console.log(name, email, mobile);
 
         if (!name || !email || !mobile) {
             return res.status(400).json({ message: "Name, email, and mobile are required" });
