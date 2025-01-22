@@ -1,15 +1,11 @@
-const express = require('express');
-const User = require('../model/user.model');
-const twilio = require('twilio');
+const express = require("express");
+const User = require("../model/user.model");
+const { sendOtp, verifyOtp } = require("../controller/otp.controller");
+
 const router = express.Router();
 
-// Twilio configuration
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = twilio(accountSid, authToken);
-
 // Create a new user
-router.post('/create', async (req, res) => {
+router.post("/create", async (req, res) => {
     try {
         const { name, email, mobile } = req.body;
 
@@ -22,90 +18,119 @@ router.post('/create', async (req, res) => {
             return res.status(400).json({ message: "User with this email already exists" });
         }
 
-        const user = new User({
-            name,
-            email,
-            mobile,
-            otp: "000000", // Default OTP if required
-            otpExpiration: new Date(Date.now() + 5 * 60 * 1000) // Default expiration
-        });
-
+        const user = new User({ name, email, mobile });
         await user.save();
-        res.status(201).json({ message: "User created successfully", user });
 
+        res.status(201).json({ message: "User created successfully", user });
     } catch (error) {
-        console.error("Failed to create user:", error);
         res.status(500).json({ message: "Failed to create user", error: error.message });
     }
 });
 
+// OTP Routes
+router.post("/send-otp", sendOtp);
+router.post("/verify-otp", async (req, res) => {
+    const { mobile, otp } = req.body;
+    const result = await verifyOtp(mobile, otp);
+    res.status(result.success ? 200 : 400).json(result);
+});
 
-// User Login Route
-router.post('/login', async (req, res) => {
+// Login Route - Based on Mobile Number and OTP
+router.post("/login", async (req, res) => {
     try {
         const { mobile, otp } = req.body;
 
-        // Validate required fields
-        if (!mobile || !otp) {
-            return res.status(400).json({ message: "Mobile number and OTP are required" });
+        // Check if mobile exists in the database
+        const user = await User.findOne({ mobile });
+        if (!user) {
+            return res.status(400).json({ message: "User not found with this mobile number" });
         }
 
-        // Find user by mobile
-        const user = await User.findOne({ mobile });
+        // Verify OTP
+        const result = await verifyOtp(mobile, otp);
+
+        if (result.success) {
+            res.status(200).json({
+                message: "Login successful",
+                user,
+            });
+        } else {
+            res.status(400).json({ message: result.message });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error logging in", error: error.message });
+    }
+});
+
+// Get a user by ID
+router.get("/:id", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching user", error: error.message });
+    }
+});
+
+// Get all users
+router.get("/", async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching users", error: error.message });
+    }
+});
+
+// Update a user by ID
+router.put("/:id", async (req, res) => {
+    try {
+        const { name, email, mobile } = req.body;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            { name, email, mobile },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ message: "User updated successfully", updatedUser });
+    } catch (error) {
+        res.status(500).json({ message: "Error updating user", error: error.message });
+    }
+});
+
+// Delete a user by ID
+router.delete("/:id", async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Validate OTP and expiration
-        if (user.otp !== otp || new Date() > user.otpExpiration) {
-            return res.status(400).json({ message: "Invalid or expired OTP" });
-        }
-
-        // Successful login
-        res.status(200).json({ message: "Login successful", user });
-
+        res.status(200).json({ message: "User deleted successfully" });
     } catch (error) {
-        console.error("Failed to login user:", error);
-        res.status(500).json({ message: "Failed to login user", error: error.message });
+        res.status(500).json({ message: "Error deleting user", error: error.message });
     }
 });
 
-// Generate and send OTP
-router.post("/send-otp", async (req, res) => {
+// Logout Route
+router.post("/logout", async (req, res) => {
     try {
-        const { mobile } = req.body;
+        // Assuming you are using JWT tokens or sessions for user authentication
+        // If using JWT tokens, this route could invalidate the user's token on the client side.
 
-        if (!mobile) {
-            return res.status(400).json({ message: "Mobile number is required" });
-        }
-
-        // Generate OTP and expiration
-        const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit OTP
-        const otpExpiration = new Date(Date.now() + 5 * 60 * 1000); // Expire in 5 minutes
-
-        // Find existing user or create a new one
-        let user = await User.findOne({ mobile });
-        if (!user) {
-            user = new User({
-                mobile,
-                otp,
-                otpExpiration,
-            });
-        } else {
-            // Update OTP and expiration for existing user
-            user.otp = otp;
-            user.otpExpiration = otpExpiration;
-        }
-
-        await user.save();
-
-        res.status(200).json({ message: "OTP sent successfully", otp }); // Optionally send OTP for testing
+        // For now, we will just send a response indicating the user has been logged out
+        res.status(200).json({ message: "Logout successful" });
     } catch (error) {
-        console.error("Failed to create user:", error);
-        res.status(500).json({ message: "An error occurred", error: error.message });
+        res.status(500).json({ message: "Error during logout", error: error.message });
     }
 });
-
-
 
 module.exports = router;

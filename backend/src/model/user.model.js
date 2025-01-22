@@ -18,23 +18,20 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        match: [/^[0-9]{10}$/, "Invalid mobile number"],
+        match: [/^\+?[0-9]{1,4}?[-.\s]?[0-9]{10}$/, "Invalid mobile number"],
     },
     otp: {
         type: String,
-        required: true,
-        default: () => Math.floor(100000 + Math.random() * 900000).toString(), // Default 6-digit OTP
+        required: false, // Managed by Twilio
     },
     otpExpiration: {
         type: Date,
-        required: true,
-        default: () => new Date(Date.now() + 5 * 60 * 1000), // Default expiry: 5 minutes from now
+        required: false, // Managed by Twilio
     },
 }, { timestamps: true });
-
-
 
 const User = model("User", userSchema);
 
 module.exports = User;
+
 
