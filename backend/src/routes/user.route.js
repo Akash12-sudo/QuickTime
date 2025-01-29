@@ -1,14 +1,15 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const User = require("../model/user.model");
 const { sendOtp, verifyOtp } = require("../controller/otp.controller");
+const isAuthenticated = require("../middleware/auth.middleware");
 
 const router = express.Router();
 
 // Create a new user
 router.post("/create", async (req, res) => {
     try {
-        const { name, email, mobile } = req.body;
-        console.log(name, email, mobile);
+        const { name, email, mobile, role } = req.body;
 
         if (!name || !email || !mobile) {
             return res.status(400).json({ message: "Name, email, and mobile are required" });
@@ -19,7 +20,12 @@ router.post("/create", async (req, res) => {
             return res.status(400).json({ message: "User with this email already exists" });
         }
 
-        const user = new User({ name, email, mobile });
+        const user = new User({
+            name,
+            email,
+            mobile,
+            role: role || "user", // Assign default role if not provided
+        });
         await user.save();
 
         res.status(201).json({ message: "User created successfully", user });
@@ -41,19 +47,37 @@ router.post("/login", async (req, res) => {
     try {
         const { mobile, otp } = req.body;
 
-        // Check if mobile exists in the database
         const user = await User.findOne({ mobile });
         if (!user) {
             return res.status(400).json({ message: "User not found with this mobile number" });
         }
 
-        // Verify OTP
         const result = await verifyOtp(mobile, otp);
 
         if (result.success) {
+            const token = jwt.sign(
+                { userId: user._id, role: user.role },
+                process.env.JWT_SECRET_KEY,  // ✅ Correct
+                { expiresIn: "1h" }
+            );
+
+
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'strict'
+            });
+
             res.status(200).json({
                 message: "Login successful",
-                user,
+                token,
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    mobile: user.mobile,
+                    role: user.role,
+                }
             });
         } else {
             res.status(400).json({ message: result.message });
@@ -63,71 +87,19 @@ router.post("/login", async (req, res) => {
     }
 });
 
-// Get a user by ID
-router.get("/:id", async (req, res) => {
+// Protected Route Example
+router.get("/protected", isAuthenticated, async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        res.status(200).json(user);
+        res.status(200).json({ message: "Access to protected route granted", user: req.user });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching user", error: error.message });
-    }
-});
-
-// Get all users
-router.get("/", async (req, res) => {
-    try {
-        const users = await User.find();
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching users", error: error.message });
-    }
-});
-
-// Update a user by ID
-router.put("/:id", async (req, res) => {
-    try {
-        const { name, email, mobile } = req.body;
-
-        const updatedUser = await User.findByIdAndUpdate(
-            req.params.id,
-            { name, email, mobile },
-            { new: true }
-        );
-
-        if (!updatedUser) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        res.status(200).json({ message: "User updated successfully", updatedUser });
-    } catch (error) {
-        res.status(500).json({ message: "Error updating user", error: error.message });
-    }
-});
-
-// Delete a user by ID
-router.delete("/:id", async (req, res) => {
-    try {
-        const user = await User.findByIdAndDelete(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        res.status(200).json({ message: "User deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ message: "Error deleting user", error: error.message });
+        res.status(500).json({ message: "Error fetching protected data", error: error.message });
     }
 });
 
 // Logout Route
 router.post("/logout", async (req, res) => {
     try {
-        // Assuming you are using JWT tokens or sessions for user authentication
-        // If using JWT tokens, this route could invalidate the user's token on the client side.
-
-        // For now, we will just send a response indicating the user has been logged out
+        res.clearCookie("token");
         res.status(200).json({ message: "Logout successful" });
     } catch (error) {
         res.status(500).json({ message: "Error during logout", error: error.message });
