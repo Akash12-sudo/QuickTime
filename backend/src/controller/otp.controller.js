@@ -10,13 +10,14 @@ const sendOtp = async (req, res) => {
 
     try {
         // Ensure mobile number is in the correct format (+<country_code><number>)
-        const formattedMobile = `+${mobile}`;
+        const formattedMobile = `+91${mobile}`;
 
         const verification = await client.verify.v2.services(process.env.TWILIO_SERVICE_SID)
             .verifications.create({ to: formattedMobile, channel: "sms" });
 
         res.status(200).json({ success: true, message: "OTP sent successfully", sid: verification.sid });
     } catch (err) {
+        console.error("error", err)
         res.status(500).json({ success: false, message: `Error in sending OTP: ${err.message}` });
     }
 };
@@ -29,7 +30,7 @@ const verifyOtp = async (mobile, otp) => {
 
     try {
         // Ensure mobile number is in the correct format (+<country_code><number>)
-        const formattedMobile = `+${mobile}`;
+        const formattedMobile = `+91${mobile}`;
 
         const result = await client.verify.v2.services(process.env.TWILIO_SERVICE_SID)
             .verificationChecks.create({

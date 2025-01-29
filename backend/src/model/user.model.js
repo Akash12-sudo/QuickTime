@@ -16,7 +16,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        match: [/^\+?[0-9]{1,4}?[-.\s]?[0-9]{10}$/, "Invalid mobile number"],
+        match: [/^\+?[0-9]{0,4}?[-.\s]?[0-9]{10}$/, "Invalid mobile number"],
     },
     otp: {
         type: String,
