@@ -1,5 +1,3 @@
-// backend/src/model/user.model.js
-
 const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema({
@@ -28,10 +26,14 @@ const userSchema = new Schema({
         type: Date,
         required: false, // Managed by Twilio
     },
+    role: {
+        type: String,
+        enum: ["user", "admin", "moderator"], // Allowed roles
+        default: "user", // Default role
+        required: true,
+    },
 }, { timestamps: true });
 
 const User = model("User", userSchema);
 
 module.exports = User;
-
-
