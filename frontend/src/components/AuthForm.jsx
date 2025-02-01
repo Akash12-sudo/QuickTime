@@ -2,91 +2,89 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
+import { useSelector } from 'react-redux';
+
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 // eslint-disable-next-line react/prop-types
 const AuthForm = ({ type, route, role }) => {
 
-  const apiUrl = import.meta.env.VITE_API_URL;
-  const { user = {}, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
+  // user -> current logged in user
+  const { user } = useSelector(state => state.auth);
+  console.log("currentUser: ", { user })
 
+  const { details = {}, setDetails } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleRoutes = () => {
     if (role === 'user')
       return type === 'login' ? '/users/signup' : '/users/login';
-    else return type === 'login' ? '/owners/signup' : '/owners/login';
+    else
+      return type === 'login' ? '/owners/signup' : '/owners/login';
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // setUser((prev) => ({ ...prev, "role": role}))
-    console.log(user);
+    setDetails((prev) => ({ ...prev, "role": role}))
+    console.log(details);
 
     if (type === 'login') {
-      // navigate(route);
-      // console.log('logged in');
-      // navigate(route);
-      const { mobile } = user;
-      if (role === 'user') {
-        try {
-          const response = await fetch(apiUrl + "/api/user/send-otp", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ mobile })
-            
-          })
 
-          const result = await response.json();
+      const { mobile } = details;
+      try {
+        const response = await fetch(apiUrl + '/api/user/send-otp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ role, mobile }),
+        });
 
-          if (!response.ok) {
-            alert(`${result.error}`); // Show an alert first
-            throw new Error(`Error: ${response.statusText}`); // Then throw the error
-          }
+        console.log(response);
+        const result = await response.json();
 
-          console.log("otp generated successfully: ", result)
-          alert('An OTP send to your phone number');
-          // setUser((prevUser) => ({...prevUser, 'otp': result.otp}))
-          navigate(route);
-
-        } catch (error) {
-          console.error('Error while generating otp:', error);         
+        if (!response.ok) {
+          alert(`${result.message}`); // Show an alert first
+          throw new Error(`Error: ${response.statusText}`); // Then throw the error
         }
-      }
 
+        console.log('otp generated successfully: ', result);
+        alert('An OTP send to your phone number');
+        // setUser((prevUser) => ({...prevUser, 'otp': result.otp}))
+        navigate(route);
+      } catch (error) {
+        console.error('Error while generating otp:', error);
+      }
     } else {
       // Handle signup-specific logic if needed
-      const { name, email, mobile } = user;
-      console.log(user);
+      const { name, role, email, mobile } = details;
+      console.log(name, email, mobile, role);
 
-      if (role === 'user') {
+      try {
+        const response = await fetch(apiUrl + '/api/user/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // Specifies the format of the data
+          },
+          body: JSON.stringify({ name, email, mobile, role }), // Converts the JavaScript object to a JSON string
+        });
 
-          try {
-            const response = await fetch(apiUrl + "/api/user/create", {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json', // Specifies the format of the data
-              },
-              body: JSON.stringify({ name, email, mobile }), // Converts the JavaScript object to a JSON string
-            });
-
-            const result = await response.json();
-            if (!response.ok) {
-              // console.log(response);
-              alert(`${result.error}`); // Show an alert first
-              throw new Error(`Error: ${response.status}`);
-            }
-            console.log('Success:', result);
-            alert('User has been successfully created!');
-            window.location.reload();
-          } catch (error) {
-            console.error('Error while signUp:', error);
-          }
-        };
+        const result = await response.json();
+        if (!response.ok) {
+          console.log(response.message);
+          alert(`${result.error}`); // Show an alert first
+          throw new Error(`Error: ${response.status}`);
+        }
+        console.log('Success:', result);
+        alert('User has been successfully created!');
+        window.location.reload();
+      } catch (error) {
+        alert(error);
+        console.error('Error while signUp:', error);
       }
     }
-  
+  };
 
   return (
     <div className="flex justify-center items-center h-auto">
@@ -129,9 +127,9 @@ const AuthForm = ({ type, route, role }) => {
               pattern="[0-9]{10}"
               id="mobile"
               required
-              value={user.mobile}
+              value={details.mobile}
               onChange={(event) =>
-                setUser((prevUser) => ({
+                setDetails((prevUser) => ({
                   ...prevUser,
                   [event.target.id]: event.target.value,
                 }))
@@ -145,9 +143,9 @@ const AuthForm = ({ type, route, role }) => {
                   type="text"
                   id="name"
                   required
-                  value={user.name}
+                  value={details.name}
                   onChange={(event) =>
-                    setUser((prevUser) => ({
+                    setDetails((prevUser) => ({
                       ...prevUser,
                       [event.target.id]: event.target.value,
                     }))
@@ -158,9 +156,9 @@ const AuthForm = ({ type, route, role }) => {
                 <input
                   type="email"
                   id="email"
-                  value={user.email}
+                  value={details.email}
                   onChange={(event) =>
-                    setUser((prevUser) => ({
+                    setDetails((prevUser) => ({
                       ...prevUser,
                       [event.target.id]: event.target.value,
                     }))

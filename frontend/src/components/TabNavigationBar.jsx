@@ -21,8 +21,8 @@ const TabNavigationBar = () => {
   ];
 
   return (
-    <div className="w-full fixed bg-background top-[120px] flex justify-center items-center">
-      <nav className="w-[1200px] border-b-[1px] border-b-grayish flex justify-start gap-x-16 text-[16px] font-mediumlight">
+    <div className="w-11/12 lg:w-[1200px] fixed bg-background top-[120px] flex justify-center items-center">
+      <nav className="w-full lg:w-[1200px] border-b-[1px] border-b-grayish flex justify-start gap-x-16 text-[16px] font-mediumlight">
         {tabs.map((tab) => (
           <Link
             key={tab.route}

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import SearchBox from '../components/SearchBox';
-import { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+import { useSelector } from 'react-redux';
 
 const dynamicNavClassName = (type) => {
   // defining possible routes
@@ -12,14 +11,16 @@ const dynamicNavClassName = (type) => {
 
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ type }) => {
+  // const { details } = useContext(UserContext);
+  // console.log(details);
 
-  const { user } = useContext(UserContext)
-  console.log(user)
+  const { user } = useSelector(state => state.auth)
+  console.log("currentUser", user)
 
   return (
     <div className="w-full left-0 bg-background fixed z-50 flex flex-row items-center justify-center">
       <nav
-        className={`w-[1200px] mb-2 top-1 pt-12 pb-4  flex justify-between items-center  font-mediumlight ${dynamicNavClassName(type)} `}
+        className={`w-11/12 lg:w-[1200px] mb-2 top-1 pt-12 pb-4  flex justify-between items-center  font-mediumlight ${dynamicNavClassName(type)} `}
       >
         {/* QuickTime Logo */}
         <Link to={{ pathname: '/' }} className="bg-red-20">
@@ -44,7 +45,9 @@ const Navbar = ({ type }) => {
           type === 'user-bookslot' ||
           type === 'owner-landing' ? (
             <p className="font-light text-2xl">
-              {type === 'owner-landing' ? 'Owner' : `${user.name ? user.name : 'User'}`}
+              {type === 'owner-landing'
+                ? `${user ? user.name : 'Owner'}`
+                : `${user ? user.name : 'User'}`}
             </p>
           ) : (
             <button className="border-[1.2px] border-black rounded-[12px] px-6 py-2 text-black">

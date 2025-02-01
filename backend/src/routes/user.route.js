@@ -10,6 +10,7 @@ const router = express.Router();
 router.post("/create", async (req, res) => {
     try {
         const { name, email, mobile, role } = req.body;
+        console.log(req.body)
 
         if (!name || !email || !mobile) {
             return res.status(400).json({ message: "Name, email, and mobile are required" });
@@ -60,7 +61,8 @@ router.post("/login", async (req, res) => {
                 process.env.JWT_SECRET_KEY,  // ✅ Correct
                 { expiresIn: "1h" }
             );
-
+            
+            console.log('token created: ', token);
 
             res.cookie("token", token, {
                 httpOnly: true,

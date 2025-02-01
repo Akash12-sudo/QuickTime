@@ -15,6 +15,8 @@ import OtpVerificationOwner from '../pages/owners/auth/OtpVerificationOwner';
 import LandingPage from '../pages/users/LandingPage';
 import BookSlot from '../pages/users/BookSlot';
 import QuickTimeUI from '../pages/owners/Landing';
+import ProtectedRoute from './protected-routes/ProtectedRoute';
+
 
 // Helper function to simplify dynamic navbar rendering
 const getNavbarType = (path) => {
@@ -51,16 +53,24 @@ const AppRoutes = () => {
     <Router>
       <AppLayout>
         <Routes>
-          <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
           <Route path="/users/login" element={<UserLogin />} />
           <Route path="/users/signup" element={<UserSignUp />} />
           <Route path="/users/otp-verify" element={<OtpVerification />} />
+
           <Route path="/owners/login" element={<OwnerLogin />} />
           <Route path="/owners/signup" element={<OwnerSignUp />} />
           <Route path="/owners/otp-verify" element={<OtpVerificationOwner />} />
-          <Route path="/users/landing" element={<LandingPage />} />
-          <Route path="/users/bookslot" element={<BookSlot />} />
-          <Route path="/owners/landing" element={<QuickTimeUI />} />
+
+          {/* User-specific routes */}
+          <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+            <Route path="/users/landing" element={<LandingPage />} />
+            <Route path="/users/bookslot/:id" element={<BookSlot />} />
+          </Route>
+          {/* Owner-protected routes */}
+          <Route element={<ProtectedRoute allowedRoles={["owner"]} />}>
+            <Route path="/owners/landing" element={<QuickTimeUI />} />
+          </Route>
         </Routes>
       </AppLayout>
     </Router>

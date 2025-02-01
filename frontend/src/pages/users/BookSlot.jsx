@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Slot from '../../components/Slot';
 
 // Dummy turf data for simulation
 import { turfDetailsArray } from '../../../constants';
 
 const BookSlot = () => {
-  const turf = turfDetailsArray[0];
+  const params = useParams();
+  const turf = turfDetailsArray[params.id];
   // State to get the current selected sort
   const [selectedSlot, setSelectedSlot] = useState(null);
 
@@ -15,14 +17,14 @@ const BookSlot = () => {
   };
 
   return (
-    <div className="mt-[120px] w-full h-screen flex flex-col items-start my-2 border-t-[0.8px] border-imagebackground">
+    <div className="mt-[120px] w-full h-full flex flex-col items-start my-2 border-t-[0.8px] border-imagebackground">
       {/* Hero Section */}
       <div className="w-full h-[300px] bg-imagebackground mt-10"></div>
 
       {/* Turf Details Section */}
       <div className="w-full mt-8 flex flex-col">
         {/* Turf Header */}
-        <div className="w-full flex justify-between gap-x-4">
+        <div className="w-full flex flex-col items-center lg:flex-row justify-between gap-x-4">
           <div className="w-1/2 flex justify-start items-center gap-x-4">
             <p className="font-medium text-[40px] antialiased">
               {turf.turfName}
@@ -52,7 +54,7 @@ const BookSlot = () => {
         </div>
 
         {/* Slots Grid */}
-        <div className="w-full grid sm:grid-cols-6 gap-y-8 gap-x-14 my-8">
+        <div className="w-full grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-y-8 gap-x-14 my-8">
           {turf.slots &&
             Object.entries(turf.slots).map(([slotKey, status]) => (
               <Slot
@@ -66,15 +68,15 @@ const BookSlot = () => {
         </div>
 
         {/* Footer */}
-        <div className="flex flex-row w-full justify-between my-4">
-          <div>
+        <div className="flex flex-col items-center lg:flex-row w-full lg:justify-between my-4">
+          <div className='my-8 lg:my-0'>
             <button className="bg-secondarylight w-[250px] h-[50px] flex justify-center items-center text-center font-mediumlight text-[20px] rounded-[5px]">
               Pay ₹{turf.rate}
             </button>
           </div>
-          <div className="w-1/2 flex items-center justify-end gap-x-16">
+          <div className="w-full md:w-1/2 flex items-center justify-end gap-x-16">
             {['Available', 'Selected', 'Booked'].map((item, id) => (
-              <div key={id} className="flex gap-x-4 items-center">
+              <div key={id} className="flex gap-x-4 items-center ">
                 <div
                   className={`w-[32px] h-[32px] rounded-[2px] border-[2px] ${item === 'Booked' ? 'border-imagebackground bg-imagebackground' : 'border-secondarylight'} ${item === 'Selected' && 'bg-secondarylight'} `}
                 ></div>

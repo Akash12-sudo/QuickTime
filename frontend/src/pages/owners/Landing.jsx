@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { ownerSlots } from '../../../constants';
 import Slot from '../../components/Slot';
+import { useSelector } from 'react-redux';
 
 function QuickTimeUI() {
+
+  const { user } = useSelector(state => state.auth)
   const slots = ownerSlots.slots;
   // State to get the current selected sort
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -20,21 +23,14 @@ function QuickTimeUI() {
   return (
     <div className="flex w-full justify-center items-center min-h-screen">
       <div className="w-full rounded-lg overflow-hidden">
-        {/* Header Section */}
-        {/* <header className="flex justify-between items-center p-5 bg-teal-50 border-b border-gray-300">
-          <div className="text-2xl font-bold text-teal-500">
-            Quick<span className="text-gray-700">Time.</span>
-          </div>
-          <div className="text-gray-600 text-sm">Owner</div>
-        </header> */}
 
-        <div className="flex mt-[100px]  py-8 ">
+        <div className="flex flex-col items-center md:flex-row mt-[100px]  py-8 ">
           {/* Left Section */}
-          <div className="flex-2 pr-5 ">
+          <div className="flex-2 p-10 pr-5 md:p-0 ">
             {/* Owner's Name Section */}
             <div className="mb-4 flex flex-row justify-start items-start gap-x-4 ">
               <h2 className="text-[40px] mt-1 font-mediumlight">
-                Owner&apos;s Name
+                {user ? user.name : 'Owner&apos;s Name'}
               </h2>
               <label className="relative w-1/4 mt-3 mx-2 h-full flex items-center justify-center">
                 {/* Hidden Checkbox */}
@@ -60,14 +56,14 @@ function QuickTimeUI() {
             </div>
 
             {/* Sales Section */}
-            <div className="bg-imagebackground w-[660px] h-[300px] flex justify-center items-center rounded-lg mb-20">
+            <div className="bg-imagebackground w-[660px] h-[300px] flex justify-center items-center mb-20">
               <p className="text-graytext font-mediumlight text-[40px] antialiased">
                 Sales this Month
               </p>
             </div>
 
             {/* Booking Slots Section */}
-            <div className={`${!isToggled && 'bg-[#D9D9D999]/60'}`}>
+            <div className={`${!isToggled && 'bg-[#D9D9D999]/60 pointer-events-none'}`}>
               <div className="flex justify-start items-center gap-x-8 pt-8">
                 <p className="font-mediumlight text-[32px] antialiased">
                   Book Slots for yourself
@@ -115,9 +111,9 @@ function QuickTimeUI() {
           </div>
 
           {/* Right Section */}
-          <div className="flex w-full justify-end ">
+          <div className="flex w-full justify-center my-10 md:justify-end md:my-0">
             <div
-              className={`flex flex-col w-[405px] rounded-xl px-6 py-4 text-grayish ${isToggled ? 'bg-white' : 'bg-[#D9D9D999]/60'} `}
+              className={`flex flex-col w-[405px] rounded-xl px-6 py-4 text-grayish ${isToggled ? 'bg-white' : 'bg-[#D9D9D999]/60 pointer-events-none'} `}
             >
               <h3 className="text-[18px] text-black font-medium mb-2">
                 Your Turf Details
@@ -138,6 +134,7 @@ function QuickTimeUI() {
                   <label className="w-1/3 pl-2">Owner Name</label>
                   <input
                     type="text"
+                    value={user.name}
                     className="w-full max-w-[260px] p-2 border border-grayish rounded bg-inherit"
                   />
                 </div>
@@ -146,6 +143,7 @@ function QuickTimeUI() {
                   <label className="w-1/3 pl-2">Phone</label>
                   <input
                     type="text"
+                    value={user.mobile}
                     className="w-full max-w-[260px] p-2 border border-grayish rounded bg-inherit"
                   />
                 </div>

@@ -1,46 +1,51 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
+import { useDispatch, useSelector } from "react-redux"
+import { setUser } from "../redux/features/auth/authSlice"
 
 // eslint-disable-next-line react/prop-types
 const OTPForm = ({ role }) => {
   // getting the user
+  const { user } = useSelector(state => state.auth);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
-  const { user, setUser } = useContext(UserContext);
+
+  const { details, setDetails } = useContext(UserContext)
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { mobile, otp } = user;
+    const { mobile, otp } = details;
     console.log(mobile, otp);
 
-    if(role === 'user') {
-      try {
-        const response = await fetch(apiUrl + "/api/user/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ mobile, otp })
-          
-        })
+    try {
+      const response = await fetch(apiUrl + '/api/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mobile, otp }),
+      });
 
-        const result = await response.json();
+      const result = await response.json();
 
-        if (!response.ok) {
-          alert(`${result.message}`); // Show an alert first
-          throw new Error(`Error: ${response.statusText}`); // Then throw the error
-        }
-
-        console.log("otp generated successfully: ", result)
-        // setUser((prevUser) => ({...prevUser, 'otp': result.otp}))
-        navigate('/users/landing');
-
-      } catch (error) {
-        console.error('error while login', error)
+      if (!response.ok) {
+        alert(`${result.message}`); // Show an alert first
+        throw new Error(`Error: ${response.statusText}`); // Then throw the error
       }
-    } 
+
+      console.log(result);
+      dispatch(setUser(result))
+      console.log(user)
+      // setUser((prevUser) => ({...prevUser, 'otp': result.otp}))
+      role === 'user' ? navigate('/users/landing') : navigate('/owners/landing')
+    } catch (error) {
+      console.error('error while login', error);
+    }
+    
   };
 
   return (
@@ -80,7 +85,7 @@ const OTPForm = ({ role }) => {
               type="tel"
               pattern="[0-9]{10}"
               id="mobile"
-              value={user.mobile}
+              value={details.mobile}
               contentEditable={false}
               placeholder="Mobile number"
               className="w-full px-4 py-3 bg-inherit border-[1px] border-grayish rounded-[2px] text-grayish placeholder-grayish focus:outline-none"
@@ -88,8 +93,13 @@ const OTPForm = ({ role }) => {
             <input
               type="password"
               id="otp"
-              value={user.otp}
-              onChange={(e) => setUser((prevUser) => ({...prevUser, [e.target.id]: e.target.value}))}
+              value={details.otp}
+              onChange={(e) =>
+                setDetails((prevUser) => ({
+                  ...prevUser,
+                  [e.target.id]: e.target.value,
+                }))
+              }
               placeholder="OTP"
               className="w-full px-4 py-3 bg-inherit border-[1px] border-grayish rounded-[2px] text-grayish placeholder-grayish focus:outline-none"
             />
