@@ -1,40 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const isTokenPresentInCookies = () => {
-    const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
-    return !!token;
+  const token = document.cookie
+    .split(';')
+    .find((cookie) => cookie.trim().startsWith('token='));
+  return !!token;
 };
 
 export const loadUserFromLocalStorage = () => {
-    try {
-        const serializedState = localStorage.getItem('user');
-        if (serializedState === null) {
-            return { user: null };
-        }  
-        return { user: JSON.parse(serializedState) };
-    } catch (error) {
-        console.log(error)
-        return { user: null };
+  try {
+    const serializedState = localStorage.getItem('user');
+    if (serializedState === null) {
+      return { user: null };
     }
+    return { user: JSON.parse(serializedState) };
+  } catch (error) {
+    console.log(error);
+    return { user: null };
+  }
 };
 
 const initialState = loadUserFromLocalStorage();
 
 const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    reducers: {
-        setUser: (state, action) => {
-            state.user = action.payload.user;
-            localStorage.setItem("user", JSON.stringify(state.user));
-        },
-        logout: (state) => {
-            state.user = null;
-            localStorage.removeItem("user");
-        }
-
-    }
-})
+  name: 'auth',
+  initialState,
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload.user;
+      localStorage.setItem('user', JSON.stringify(state.user));
+    },
+    logout: (state) => {
+      state.user = null;
+      localStorage.removeItem('user');
+    },
+  },
+});
 
 export const { setUser, logout } = authSlice.actions;
 

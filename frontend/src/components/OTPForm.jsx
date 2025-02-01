@@ -1,19 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
-import { useDispatch, useSelector } from "react-redux"
-import { setUser } from "../redux/features/auth/authSlice"
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../redux/features/auth/authSlice';
 
 // eslint-disable-next-line react/prop-types
 const OTPForm = ({ role }) => {
   // getting the user
-  const { user } = useSelector(state => state.auth);
-  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  const { details, setDetails } = useContext(UserContext)
-
+  const { details, setDetails } = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,14 +37,15 @@ const OTPForm = ({ role }) => {
       }
 
       console.log(result);
-      dispatch(setUser(result))
-      console.log(user)
+      dispatch(setUser(result));
+      console.log(user);
       // setUser((prevUser) => ({...prevUser, 'otp': result.otp}))
-      role === 'user' ? navigate('/users/landing') : navigate('/owners/landing')
+      role === 'user'
+        ? navigate('/users/landing')
+        : navigate('/owners/landing');
     } catch (error) {
       console.error('error while login', error);
     }
-    
   };
 
   return (

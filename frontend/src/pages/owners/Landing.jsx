@@ -1,15 +1,25 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ownerSlots } from '../../../constants';
 import Slot from '../../components/Slot';
 import { useSelector } from 'react-redux';
+import { UserContext } from '../../context/UserContext';
 
 function QuickTimeUI() {
-
-  const { user } = useSelector(state => state.auth)
+  const { fetchDate } = useContext(UserContext);
+  const { user } = useSelector((state) => state.auth);
   const slots = ownerSlots.slots;
   // State to get the current selected sort
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [isToggled, setIsToggled] = useState(false);
+  const [slotDate, setSlotDate] = useState(0);
+
+  const upcomingDates = [
+    fetchDate(0), // Today's date
+    fetchDate(1), // Tomorrow
+    fetchDate(2), // Day after tomorrow
+  ];
+
+  console.log(upcomingDates);
 
   const handleToggle = () => {
     setIsToggled((prevState) => !prevState);
@@ -23,12 +33,11 @@ function QuickTimeUI() {
   return (
     <div className="flex w-full justify-center items-center min-h-screen">
       <div className="w-full rounded-lg overflow-hidden">
-
-        <div className="flex flex-col items-center md:flex-row mt-[100px]  py-8 ">
+        <div className="flex flex-col items-center lg:flex-row mt-[100px] py-8 scale-x-90 sm:scale-x-100">
           {/* Left Section */}
           <div className="flex-2 p-10 pr-5 md:p-0 ">
             {/* Owner's Name Section */}
-            <div className="mb-4 flex flex-row justify-start items-start gap-x-4 ">
+            <div className="mb-4 flex flex-row w-full justify-center ml-10 md:ml-0 lg:ml-1 md:justify-start items-start gap-x-4 ">
               <h2 className="text-[40px] mt-1 font-mediumlight">
                 {user ? user.name : 'Owner&apos;s Name'}
               </h2>
@@ -56,31 +65,33 @@ function QuickTimeUI() {
             </div>
 
             {/* Sales Section */}
-            <div className="bg-imagebackground w-[660px] h-[300px] flex justify-center items-center mb-20">
+            <div className="bg-imagebackground scale-x-75 sm:scale-100 w-[660px] h-[300px] flex justify-center items-center mb-20">
               <p className="text-graytext font-mediumlight text-[40px] antialiased">
                 Sales this Month
               </p>
             </div>
 
             {/* Booking Slots Section */}
-            <div className={`${!isToggled && 'bg-[#D9D9D999]/60 pointer-events-none'}`}>
-              <div className="flex justify-start items-center gap-x-8 pt-8">
+            <div
+              className={`${!isToggled && 'bg-[#D9D9D999]/60 pointer-events-none'} flex flex-col items-center sm:items-start`}
+            >
+              <div className="flex flex-col sm:flex-row justify-start items-center gap-x-8 pt-8">
                 <p className="font-mediumlight text-[32px] antialiased">
                   Book Slots for yourself
                 </p>
-                <div className="flex w-[300px] h-[50px] justify-between rounded-lg font-mediumlight text-[20px] antialiased bg-secondarylight mb-2">
-                  <p className="w-full h-full flex items-center justify-center text-center">
-                    12-1
-                  </p>
-                  <p className="w-full h-full flex items-center justify-center text-center bg-white">
-                    13-1
-                  </p>
-                  <p className="w-full h-full flex items-center justify-center text-center bg-white rounded-r-lg">
-                    14-1
-                  </p>
+                <div className="flex w-[300px] h-[50px] justify-between rounded-lg font-mediumlight text-[20px] antialiased bg-white mb-2">
+                  {upcomingDates.map((date, id) => (
+                    <p
+                      key={id}
+                      onClick={() => setSlotDate(id)}
+                      className={`w-full h-full flex items-center justify-center text-center ${id === slotDate && 'bg-secondarylight'} ${id === 0 && 'rounded-l-lg'} ${id === 2 && 'rounded-r-lg'}`}
+                    >
+                      {date}
+                    </p>
+                  ))}
                 </div>
               </div>
-              <div className="w-full grid sm:grid-cols-4 gap-y-4 gap-x-2 my-8">
+              <div className="w-1/2 sm:w-full grid grid-cols-2 place-items-center sm:grid-cols-3 md:grid-cols-4 gap-y-4 gap-x-2 my-8">
                 {slots &&
                   Object.entries(slots).map(([slotKey, status]) => (
                     <Slot
@@ -92,11 +103,11 @@ function QuickTimeUI() {
                     />
                   ))}
               </div>
-              <div className="mt-4 flex flex-row justify-between items-center">
+              <div className="mt-4 flex flex-col sm:flex-row justify-between items-center">
                 <button className="w-[200px] h-[50px] font-mediumlight text-[20px] antialiased px-4 py-2 bg-secondarylight rounded">
                   Book for you
                 </button>
-                <div className="w-1/2 flex items-center justify-end gap-x-10 px-2">
+                <div className="w-11/12 scale-90 sm:scale-100 mt-10 sm:mt-0 sm:w-1/2 flex items-center justify-end gap-x-10 px-2">
                   {['Available', 'Selected', 'Booked'].map((item, id) => (
                     <div key={id} className="flex gap-x-2 items-center">
                       <div
@@ -111,7 +122,7 @@ function QuickTimeUI() {
           </div>
 
           {/* Right Section */}
-          <div className="flex w-full justify-center my-10 md:justify-end md:my-0">
+          <div className="flex w-full justify-center my-10 mt-0 md:mt-10 lg:mt-0 lg:justify-end md:my-0">
             <div
               className={`flex flex-col w-[405px] rounded-xl px-6 py-4 text-grayish ${isToggled ? 'bg-white' : 'bg-[#D9D9D999]/60 pointer-events-none'} `}
             >

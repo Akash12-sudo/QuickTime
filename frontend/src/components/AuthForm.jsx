@@ -4,15 +4,13 @@ import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { useSelector } from 'react-redux';
 
-
 const apiUrl = import.meta.env.VITE_API_URL;
 
 // eslint-disable-next-line react/prop-types
 const AuthForm = ({ type, route, role }) => {
-
   // user -> current logged in user
-  const { user } = useSelector(state => state.auth);
-  console.log("currentUser: ", { user })
+  const { user } = useSelector((state) => state.auth);
+  console.log('currentUser: ', { user });
 
   const { details = {}, setDetails } = useContext(UserContext);
   const navigate = useNavigate();
@@ -20,17 +18,15 @@ const AuthForm = ({ type, route, role }) => {
   const handleRoutes = () => {
     if (role === 'user')
       return type === 'login' ? '/users/signup' : '/users/login';
-    else
-      return type === 'login' ? '/owners/signup' : '/owners/login';
+    else return type === 'login' ? '/owners/signup' : '/owners/login';
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setDetails((prev) => ({ ...prev, "role": role}))
+    setDetails((prev) => ({ ...prev, role: role }));
     console.log(details);
 
     if (type === 'login') {
-
       const { mobile } = details;
       try {
         const response = await fetch(apiUrl + '/api/user/send-otp', {
@@ -89,7 +85,7 @@ const AuthForm = ({ type, route, role }) => {
   return (
     <div className="flex justify-center items-center h-auto">
       <div
-        className={`w-[375px] p-6 rounded-2xl shadow-md font-light antialiased ${
+        className={`scale-90 sm:scale-100 w-[375px] p-6 rounded-2xl shadow-md font-light antialiased ${
           role === 'user' ? 'bg-white' : 'bg-black'
         }`}
       >
